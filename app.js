@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3000;
 const logger = require("./middlewares/logger");
 const todoValidator = require("./middlewares/validator");
 const errorHandler = require("./middlewares/errorHandler");
+const todoPatchValidator = require("./middlewares/validatorPatch");
 
 var corsOptions = {
   origin: "http://localhost:5173",
@@ -93,7 +94,7 @@ app.post("/todos", todoValidator, (req, res, next) => {
 
 // Edit an item on the todo not all the items (PUT will replace or edit all the items, even if client don't pass all the properties)
 // Also note that the req param always comes as a string, so we'll always need to parse as interger before we use the data to search
-app.patch("/todos/:id", (req, res, next) => {
+app.patch("/todos/:id", todoPatchValidator, (req, res, next) => {
   try {
     const requestId = parseInt(req.params.id);
 
